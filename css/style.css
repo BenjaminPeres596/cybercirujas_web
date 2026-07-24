@@ -10,29 +10,46 @@ html {
 
 @font-face {
     font-family: 'fixedsys';
-    src: url('font/Fixedsys500c.otf') format('truetype');
+    src: url('../font/Fixedsys500c.otf') format('truetype');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: 'manifiesto';
+    src: url('../font/PixelFraktur.ttf') format('truetype');
+    font-weight: 900;
+}
+
+@font-face {
+    font-family: 'adventurer';
+    src: url('../font/Adventurer.ttf') format('truetype');
+    font-weight: normal;
 }
 
 :root {
     /* ------COLORES------ */
     /* fondo */
-    --color-fondo-principal: #afafaf;
-    --color-fondo-superficie: #fff;
+    --color-fondo-principal: #50459B;
+    --color-fondo-superficie: #ffffff;
     --color-fondo-elemento: #8b8b8b;
     --color-fondo-modal: rgba(0, 0, 0, 0.5);
 
     /* texto */
-    --color-texto-principal: #000;
+    --color-texto-oscuro: #000;
+    --color-texto-oscuro-hover: #252525;
+    --color-texto-oscuro-atenuado: rgba(0, 0, 0, 0.25);
+
+    --color-texto-claro: #ffffff;
+    --color-texto-claro-hover: #d2d2d2;
+    --color-texto-claro-atenuado: rgba(255, 255, 255, 0.25);
+
     --color-texto-secundario: #50459B;
-    --color-texto-atenuado: #636363;
+    --color-texto-secundario-hover: #6356BF;
+    --color-texto-secundario-atenuado: rgba(80, 69, 155, 0.25);
 
     /* acentos */
     --color-acento: #50459B;
     --color-acento-hover: #8a7fcd;
-
-    /* bordes */
-    --color-borde-suave: #636363;
-    --color-borde-foco: #50459B;
 
     /* estados */
     --color-exito: #9be39d;
@@ -49,12 +66,15 @@ html {
     /* ------FUENTES------ */
     /* familia */
     --fuente-principal: 'fixedsys';
+    --fuente-secundaria: 'adventurer';
+    --fuente-manifiesto: 'manifiesto';
 
     /* tamaños */
-    --tamano-texto-xs: 0.875rem;
-    --tamano-texto-sm: 1rem;
-    --tamano-texto-md: 1.5rem;
-    --tamano-texto-lg: 3.5rem;
+    --tamano-texto-xs: 0.875rem;      /* 14px */
+    --tamano-texto-s: 1rem;           /* 16px */
+    --tamano-texto-m: 1.5rem;         /* 24px */
+    --tamano-texto-l: 2rem;           /* 32px */
+    --tamano-texto-xl: 3.5rem;        /* 56px */
 }
 
 body {
@@ -74,7 +94,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: white;
+    color: var(--color-fondo-superficie);
 }
 
 ul {
@@ -87,7 +107,11 @@ ul {
     }
     a {
         text-decoration: none;
-        color: white;
+        color: var(--color-texto-claro);
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 
@@ -95,6 +119,7 @@ ul {
     font-family: monospace;
     white-space: pre;
     font-size: 0.25rem;
+    cursor: pointer;
 }
 
 .linea {
@@ -107,20 +132,21 @@ ul {
 
 #hero-text {
     grid-area: titulo;
+
     h1 {
-        font-size: var(--tamano-texto-lg);
+        font-size: var(--tamano-texto-xl);
         padding-bottom: var(--espacio-md);
     }
 
     p {
-        font-size: var(--tamano-texto-md);
+        font-size: var(--tamano-texto-m);
         padding-bottom: var(--espacio-sm);
     }
 }
 
 .compu p{
     font-size: 0.75rem;
-    color: white;
+    color: var(--color-fondo-superficie);
 }
     
 .hero {
@@ -129,36 +155,53 @@ ul {
     grid-template-areas:
         "titulo compu";
     padding: 5% 15% 5% 15%;
-    color: white;
+    color: var(--color-fondo-superficie);
 
     h1 {
-        font-size: var(--tamano-texto-lg);
+        font-size: var(--tamano-texto-xl);
     }
 }
 
 button {
     margin-top: var(--espacio-md);
     font-family: var(--fuente-principal);
-    background-color: white;
+    background-color: var(--color-fondo-superficie);
     color: rgb(0, 0, 0);
     border: none;
     padding: var(--espacio-sm);
     cursor: pointer;
     box-shadow: 10px 10px 0px rgba(0, 0, 0, 1);
+    font-size: var(--tamano-texto-s);
+    margin-right: var(--espacio-sm);
+
+    a {
+        text-decoration: none;
+        color: var(--color-texto-oscuro);
+    }
+
+    &:hover {
+        background-color: var(--color-texto-oscuro);
+        color: var(--color-fondo-superficie);
+        box-shadow: 10px 10px 0px rgba(255, 255,255, 1);
+
+        a {
+            color: var(--color-fondo-superficie);
+        }
+    }
 }
 
 .about {
-    background-image: url('img/fondo.png');
+    background-image: url('../img/fondo.png');
     background-size: cover;
     background-position: center;
     padding: 5% 15% 5% 15%;
     h1 {
-        font-size: var(--tamano-texto-lg);
+        font-size: var(--tamano-texto-xl);
         text-align: center;
     }
 
     p {
-        font-size: var(--tamano-texto-md);
+        font-size: var(--tamano-texto-m);
         padding: var(--espacio-sm) 0;
         line-height: 1.6;
     }
