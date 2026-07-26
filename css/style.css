@@ -69,47 +69,67 @@ html {
     --fuente-secundaria: 'adventurer';
     --fuente-manifiesto: 'manifiesto';
 
-    /* tamaños */
+    /* tamaños (base: pantallas muy chicas, <375px) */
     --tamano-texto-xs: 0.875rem;      /* 14px */
     --tamano-texto-s: 1rem;           /* 16px */
-    --tamano-texto-m: 1.5rem;         /* 24px */
-    --tamano-texto-l: 2rem;           /* 32px */
-    --tamano-texto-xl: 3.5rem;        /* 56px */
+    --tamano-texto-m: 1rem;
+    --tamano-texto-l: 1.15rem;
+    --tamano-texto-xl: 1.5rem;
+
+    /* padding lateral de las secciones */
+    --padding-lateral: 5%;
 }
 
 body {
     font-family: var(--fuente-principal);
 }
+
 a {
         text-decoration: none;
         color: var(--color-texto-claro);
 }
 
 .section-title {
-    font-size: var(--tamano-texto-xl);
-    padding: 5% 15% 0 15%;
+    font-size: clamp(1rem, 4.6vw, var(--tamano-texto-xl));
+    padding: 8% var(--padding-lateral) 0 var(--padding-lateral);
     margin-bottom: var(--espacio-md);
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .container {
     background-color: var(--color-texto-secundario);
     display: grid;
     min-height: 100dvh;
-    grid-template-rows: 
+    grid-template-rows:
     auto 1fr auto;
 }
 
 .header {
     padding: var(--espacio-sm);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: var(--espacio-sm);
+    text-align: center;
     color: var(--color-fondo-superficie);
+}
+
+/* evita que los hijos de flex/grid fuercen el ancho de la página
+   (min-width: auto es la causa del scroll horizontal) */
+.header > *,
+.hero > *,
+.footer-info > * {
+    min-width: 0;
+    max-width: 100%;
 }
 
 ul {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--espacio-sm);
 
     li {
@@ -127,6 +147,8 @@ ul {
     white-space: pre;
     font-size: 0.25rem;
     cursor: pointer;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .linea {
@@ -135,6 +157,7 @@ ul {
 
 #compu {
     grid-area: compu;
+    justify-self: center;
 }
 
 #hero-text {
@@ -152,16 +175,21 @@ ul {
 }
 
 .compu p{
-    font-size: 0.75rem;
+    font-size: 0.5rem;
     color: var(--color-fondo-superficie);
+    white-space: pre;
+    max-width: 100%;
+    overflow: hidden;
 }
-    
+
 .hero {
     display: grid;
-    grid-template-columns: 1fr 0.5fr;
+    grid-template-columns: 1fr;
     grid-template-areas:
-        "titulo compu";
-    padding: 5% 15% 5% 15%;
+        "titulo"
+        "compu";
+    gap: var(--espacio-md);
+    padding: 5% var(--padding-lateral) 5% var(--padding-lateral);
     color: var(--color-fondo-superficie);
 
     h1 {
@@ -192,6 +220,16 @@ button {
     }
 }
 
+.buttons {
+    display: flex;
+    flex-direction: column;
+
+    button {
+        margin-right: 0;
+        width: 100%;
+    }
+}
+
 .content-fondo {
     background-image: url('../img/fondo.png');
     background-size: cover;
@@ -200,7 +238,7 @@ button {
 }
 
 .about {
-    padding: 0 15% 0 15%;
+    padding: 0 var(--padding-lateral) 0 var(--padding-lateral);
     h1 {
         font-size: var(--tamano-texto-xl);
         text-align: center;
@@ -220,25 +258,21 @@ button {
 
 .donaciones {
     background-color: var(--color-fondo-principal);
-    margin: 0 15% 0 15%;
-    padding: var(--espacio-md);
+    margin: 0 var(--padding-lateral) 0 var(--padding-lateral);
+    padding: var(--espacio-sm);
 }
 
 .container-donaciones {
     color: var(--color-texto-claro);
     background-color: var(--color-fondo-principal);
-    border: 15px double var(--color-texto-claro);
-    padding: var(--espacio-md);
+    border: 8px double var(--color-texto-claro);
+    padding: var(--espacio-sm);
 
     display: flex;
     flex-direction: column;
-    h1 {
-        font-size: var(--tamano-texto-xl);
-        text-align: center;
-    }
 
     p {
-        font-size: var(--tamano-texto-l);
+        font-size: var(--tamano-texto-m);
         padding: var(--espacio-sm) 0;
     }
 
@@ -249,7 +283,7 @@ button {
 
     legend {
         font-size: var(--tamano-texto-xl);
-        margin-left: var(--espacio-md);
+        margin-left: var(--espacio-xs);
         padding: var(--espacio-xs);
     }
 
@@ -264,10 +298,10 @@ button {
     }
 
     button {
-        align-self: end;
+        align-self: stretch;
         font-size: var(--tamano-texto-m);
     }
-    
+
     h1 {
         font-size: var(--tamano-texto-l);
         text-align: center;
@@ -275,16 +309,20 @@ button {
 }
 
 .actividades {
-    padding: 0 15% 0 15%;
+    padding: 0 var(--padding-lateral) 0 var(--padding-lateral);
     color: var(--color-texto-oscuro);
     display: flex;
+    flex-wrap: wrap;
     gap: var(--espacio-md);
-    height: 40dvh;
+    min-height: 40dvh;
+
+    /* container query: las tarjetas se adaptan al ancho disponible del contenedor */
+    container-type: inline-size;
+    container-name: actividades;
 
     fieldset {
         border: 8px double var(--color-texto-oscuro);
-        width: 100%;
-        height: 100%;
+        flex: 1 1 100%;
         display: flex;
         align-items: center;
 
@@ -303,8 +341,22 @@ button {
     }
 }
 
+/* Contenedor mediano: 2 tarjetas por fila (la tercera ocupa el ancho completo) */
+@container actividades (min-width: 34rem) {
+    .actividades fieldset {
+        flex: 1 1 calc(50% - var(--espacio-md));
+    }
+}
+
+/* Contenedor amplio: 3 tarjetas por fila */
+@container actividades (min-width: 56rem) {
+    .actividades fieldset {
+        flex: 1 1 0;
+    }
+}
+
 .ciudades {
-    padding: 0 15% 0 15%;
+    padding: 0 var(--padding-lateral) 0 var(--padding-lateral);
 
     p {
         font-size: var(--tamano-texto-m);
@@ -366,6 +418,7 @@ button {
 #links {
     grid-area: links;
     display: flex;
+    flex-wrap: wrap;
     align-items: start;
     gap: var(--espacio-md);
 }
@@ -373,6 +426,7 @@ button {
 #copyright {
     grid-area: copyr;
     align-self: end;
+    text-align: center;
 }
 
 #arch {
@@ -381,9 +435,11 @@ button {
 
 .ascii-arch {
     font-family: monospace;
-    font-size: var(--tamano-texto-l);
+    font-size: 0.75rem;
     white-space: pre;
-    justify-self: end;
+    justify-self: center;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .canales {
@@ -395,13 +451,13 @@ button {
         padding-bottom: var(--espacio-sm);
     }
 
-    a {    
-        padding-bottom: var(--espacio-xs);      
+    a {
+        padding-bottom: var(--espacio-xs);
         &:hover {
             text-decoration: underline;
         }
     }
-    
+
 }
 
 .informacion {
@@ -413,8 +469,8 @@ button {
         padding-bottom: var(--espacio-sm);
     }
 
-    a {   
-        padding-bottom: var(--espacio-xs);     
+    a {
+        padding-bottom: var(--espacio-xs);
         &:hover {
             text-decoration: underline;
         }
@@ -424,19 +480,141 @@ button {
 footer {
     background-color: var(--color-fondo-principal);
     color: var(--color-fondo-superficie);
-    padding: var(--espacio-lg);
+    padding: var(--espacio-md);
 }
 
 .footer-info {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1.75fr 0.5fr 0.5fr;
+    grid-template-columns: 1fr;
     grid-template-areas:
-        "lema arch"
-        "links arch"
-        "copyr arch";
+        "lema"
+        "links"
+        "arch"
+        "copyr";
+    gap: var(--espacio-md);
 
     h1 {
         font-size: var(--tamano-texto-xl);
+    }
+}
+
+/* ══════════ MOBILE (min-width: 375px) ══════════ */
+@media (min-width: 375px) {
+    :root {
+        --tamano-texto-m: 1.05rem;
+        --tamano-texto-l: 1.25rem;
+        --tamano-texto-xl: 1.75rem;
+    }
+}
+
+/* ══════════ TABLET (min-width: 768px) ══════════ */
+@media (min-width: 768px) {
+    :root {
+        --tamano-texto-m: 1.25rem;
+        --tamano-texto-l: 1.5rem;
+        --tamano-texto-xl: 2.5rem;
+
+        --padding-lateral: 6%;
+    }
+
+    .header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--espacio-sm) var(--espacio-md);
+        text-align: left;
+    }
+
+    .compu p {
+        font-size: 0.75rem;
+    }
+
+    .buttons {
+        display: block;
+
+        button {
+            margin-right: var(--espacio-sm);
+            width: auto;
+        }
+    }
+
+    .donaciones {
+        padding: var(--espacio-md);
+    }
+
+    .container-donaciones {
+        border-width: 15px;
+        padding: var(--espacio-md);
+
+        p {
+            font-size: var(--tamano-texto-l);
+        }
+
+        legend {
+            margin-left: var(--espacio-md);
+        }
+
+        button {
+            align-self: end;
+        }
+    }
+
+    .ascii-arch {
+        font-size: 1rem;
+    }
+}
+
+/* ══════════ DESKTOP (min-width: 1024px) ══════════ */
+@media (min-width: 1024px) {
+    :root {
+        --tamano-texto-m: 1.5rem;
+        --tamano-texto-l: 2rem;
+        --tamano-texto-xl: 3.5rem;
+
+        --padding-lateral: 15%;
+    }
+
+    .section-title {
+        font-size: var(--tamano-texto-xl);
+        padding-top: 5%;
+    }
+
+    .header {
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    .hero {
+        grid-template-columns: 1fr 0.5fr;
+        grid-template-areas:
+            "titulo compu";
+        gap: 0;
+    }
+
+    #compu {
+        justify-self: auto;
+    }
+
+    footer {
+        padding: var(--espacio-lg);
+    }
+
+    .footer-info {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1.75fr 0.5fr 0.5fr;
+        grid-template-areas:
+            "lema arch"
+            "links arch"
+            "copyr arch";
+        gap: 0;
+    }
+
+    .ascii-arch {
+        font-size: var(--tamano-texto-l);
+        justify-self: end;
+    }
+
+    #copyright {
+        text-align: left;
     }
 }

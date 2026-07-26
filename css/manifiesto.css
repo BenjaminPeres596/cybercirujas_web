@@ -1,43 +1,95 @@
+/* Base (mobile): el pergamino se estira al alto del contenido
+   para mantener el texto legible */
 .manifiesto {
     background-image: url('../img/fondo.png');
     background-size: cover;
     background-position: center;
-    padding: 5% 0 5% 0;
+    padding: 5% 3%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .container-manifiesto {
-    width: 1596px;
-    height: 1750px;
+    width: min(1596px, 100%);
     background-image: url('../img/manifiesto.png');
-    background-size: cover;
+    background-size: 100% 100%;
     background-position: center;
+
+    /* el texto escala junto al pergamino en desktop (unidades cqw) */
+    container-type: inline-size;
+    container-name: manifiesto;
 }
 
 .manifiesto-text {
     color: var(--color-texto-oscuro);
     text-align: center;
-    padding: 8% 14%;
+    padding: 14% 10%;
+
     h1 {
         font-family: var(--fuente-manifiesto);
-        font-size: 64px;
+        font-size: 2rem;
         padding-bottom: var(--espacio-lg);
     }
 }
 
 .manifiesto-p {
     font-family: var(--fuente-secundaria);
-    font-size: var(--tamano-texto-m);
+    font-size: 1rem;
     padding-bottom: var(--espacio-sm);
 }
 
 .firma {
     font-family: var(--fuente-secundaria);
-    font-size: var(--tamano-texto-xs);
+    font-size: 0.8rem;
     padding-top: var(--espacio-sm);
+
     p {
         padding-bottom: var(--espacio-sm);
+    }
+}
+
+/* ══════════ TABLET (min-width: 768px) ══════════ */
+@media (min-width: 768px) {
+    .manifiesto-text h1 {
+        font-size: 2.75rem;
+    }
+
+    .manifiesto-p {
+        font-size: 1.125rem;
+    }
+
+    .firma {
+        font-size: 0.85rem;
+    }
+}
+
+/* ══════════ DESKTOP (min-width: 1024px) ══════════
+   Proporción real del pergamino; la tipografía escala con su
+   ancho (a 1596px equivale a los 64px / 24px / 14px originales) */
+@media (min-width: 1024px) {
+    .manifiesto {
+        padding: 5% 0;
+    }
+
+    .container-manifiesto {
+        aspect-ratio: 1596 / 1750;
+        background-size: cover;
+    }
+
+    .manifiesto-text {
+        padding: 8% 14%;
+    }
+
+    .manifiesto-text h1 {
+        font-size: 4cqw;
+    }
+
+    .manifiesto-p {
+        font-size: 1.5cqw;
+    }
+
+    .firma {
+        font-size: 0.9cqw;
     }
 }
